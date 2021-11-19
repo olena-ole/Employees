@@ -1,13 +1,14 @@
 import React, {StrictMode} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-//import App from './App';
+import App from './Components/app/app';
+
 //import {Header} from './App';
 
-/* ReactDOM.render(
+ReactDOM.render(
   <StrictMode>
     <App />
   </StrictMode>,
   document.getElementById('root')
-); */
+);
 
