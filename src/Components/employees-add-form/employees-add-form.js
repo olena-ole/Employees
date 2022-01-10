@@ -16,12 +16,14 @@ class EmployeesAddForm extends Component {
     }
 
     handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        this.props.onAddEmployee(this.state.name, this.state.salary);
+        this.setState({name: '', salary: ''})
     }
 
     render() {
         const {name, salary} = this.state;
-
+        //const {onAddEmployee} = this.props;
         return (
             <div className="app-add-form">
                 <h3>Add a new employee</h3>

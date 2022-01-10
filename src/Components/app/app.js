@@ -8,27 +8,59 @@ import EmployeesAddForm from '../employees-add-form/employees-add-form';
 
 import './app.css';
 
+import nextId from "react-id-generator";
+
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [
-                {name: "John C.", salary: 800, increase: false, id: 1},
-                {name: "Alex M.", salary: 3000, increase: true, id: 2},
-                {name: "Carl W.", salary: 5000, increase: false, id: 3}
+                {name: "John C.", salary: 800, increase: false, rise: true, id: nextId()},
+                {name: "Alex M.", salary: 3000, increase: true, rise: false, id: nextId()},
+                {name: "Carl W.", salary: 5000, increase: false, rise: false, id: nextId()}
             ]
-        }
+        };
     }
 
     deleteItem = id => {
         this.setState(({data}) => ({data: data.filter(item => item.id !== id)}))
     }
 
+    addEmployee = (name, salary) => {
+        const newObj = {name, salary, increase: false, rise: false, id: nextId()};
+        this.setState(({data}) => ({data: [...data, newObj]}));
+    }
+
+    onToggleIncrease = (id) => {
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return {...item, increase: !item.increase}
+                }
+                return item;
+            })
+        }))
+    }
+
+    onToggleRise = (id) => {
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return {...item, rise: !item.rise}
+                }
+                return item;
+            })
+        }))
+    }
+
     render() {
+        const employees = this.state.data.length;
+        const increased = this.state.data.filter(item => item.increase).length;
+
         return (
             <div className='app'>
-                <AppInfo/>
+                <AppInfo emlpoyees={employees} increased={increased}/>
     
                 <div className="search-panel">
                     <SearchPanel/>
@@ -37,8 +69,10 @@ class App extends Component {
     
                 <EmployeesList 
                     data={this.state.data}
-                    onDelete={this.deleteItem} />
-                <EmployeesAddForm/>
+                    onDelete={this.deleteItem} 
+                    onToggleIncrease={this.onToggleIncrease}
+                    onToggleRise={this.onToggleRise} />
+                <EmployeesAddForm onAddEmployee={this.addEmployee} />
             </div>
         );
     }
