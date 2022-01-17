@@ -12,7 +12,11 @@ const EmployeesListItem = (props) => {
 
     return (
         <li className={classNames}>
-        <span className="list-group-item-label" onClick={onToggleProp} data-toggle="rise">
+        <span className="list-group-item-label" 
+                onClick={onToggleProp} 
+                data-toggle="rise" 
+                tabIndex="0" 
+                onKeyDown={(e) => e.key === ' ' || e.key === 'Spacebar' ? onToggleProp(e) : null}>
             {name}
         </span>
         <input
